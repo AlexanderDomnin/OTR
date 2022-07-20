@@ -28,8 +28,10 @@ class MainPage(BasePage, BaseApi):
             self.should_be_correct_url(link)
 
     def _open_link(self, link: str):
-        self.browser.get(link)
+        with allure.step(f'Открыть ссылку {link}'):
+            self.browser.get(link)
 
+    @allure.step('Получить список ссылок из элементов "a"')
     def _get_link_on_page(self):
         list_link = self.browser.find_elements(By.TAG_NAME, 'a')
         link_attr = [element.get_attribute('href') for element in list_link]
